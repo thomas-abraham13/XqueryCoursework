@@ -1,4 +1,6 @@
 xquery version "1.0";
+
+<html>
 <bncDoc>
 {
     let $doc := collection("./?select=*xml")
@@ -12,3 +14,4 @@ xquery version "1.0";
     </target>
 }
 </bncDoc>
+</html>

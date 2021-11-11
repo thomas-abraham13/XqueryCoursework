@@ -4,18 +4,13 @@ xquery version "1.0";
     let $doc := collection("./?select=*xml")
     let $result := $doc//w[matches(.,'^has')]
     for $i at $iPos in $result
-    for $j at $jPos in $result/following-sibling::w[1]
+    for $j at $jPos in distinct-values($result/following-sibling::w[1])
     
-    let $s := "has"
-    let $x := doc("KS0.xml")//u//s//w[lower-case(normalize-space()) = $s]
-    for $w in distinct-values($x/following-sibling::w[1])
-    let $g := $x/following-sibling::w[1][. = $w]
-    order by count($g) descending
+    let $k := $result/following-sibling::w[1][. = $j]
+    order by count($k) descending
+    
     return <tr>
-           <td>{$s}</td>
-           <td>{$w}</td>
-           <td>{count($g)}</td>
+           {$i,$k,count($k)}
        </tr>
-    
 }
 </bncDoc>
