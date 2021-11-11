@@ -7,10 +7,11 @@ xquery version "1.0";
     for $j at $jPos in distinct-values($result/following-sibling::w[1])
     
     let $k := $result/following-sibling::w[1][. = $j]
-    order by count($k) descending
+    let $freq := count($k)
+    order by $freq descending
     
     return <tr>
-           {$i,$k,count($k)}
+           {$i,$k,$freq}
        </tr>
 }
 </bncDoc>
