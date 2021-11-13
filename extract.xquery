@@ -1,17 +1,30 @@
 xquery version "1.0";
 
 <html>
-<bncDoc>
-{
-    let $doc := collection("./?select=*xml")
-    let $result := $doc//w[matches(.,'^has')]
-    for $i at $iPos in $result
-    for $j at $jPos in $result/following-sibling::w[1]
-    return <target>
-    {
-        ($i,$j)
-    }
-    </target>
-}
-</bncDoc>
+    <body>
+        <table style="border:2px solid black">
+            <tr style ="background-color: #e2e2e2; padding: 5px">
+                <td style="font-weight:bold">
+                    <i><b>Target</b></i>
+                </td>
+                <td style="font-weight:bold">
+                    <i><b>Successor</b></i>
+                </td>
+            </tr>
+            {
+                let $doc := collection("./?select=*xml")
+                let $result := $doc//w[matches(.,'^has')]
+                for $succ in ($result/lower-case(normalize-space(following-sibling::w[1])))
+                return
+                    <tr>
+                        <td>
+                            {"has"}
+                        </td>
+                        <td>
+                            {$succ}
+                        </td>
+                    </tr>
+            }
+        </table>            
+    </body>
 </html>

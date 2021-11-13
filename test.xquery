@@ -3,34 +3,25 @@ xquery version "1.0";
 <html>
     <body>
         <table style="border:2px solid black">
-            <tr style ="background-color: #d2d2d2; padding: 5px">
+            <tr style ="background-color: #e2e2e2; padding: 5px">
                 <td style="font-weight:bold">
-                    Target
+                    <i>Target</i>
                 </td>
                 <td style="font-weight:bold">
-                    Successor
-                </td>
-                <td style="font-weight:bold">
-                    Frequency
+                    <i>Successor</i>
                 </td>
             </tr>
             {
-                let $key := "has"
-                let $document_collection := collection("./?select=*xml")
-                let $words := $document_collection//s//w[lower-case(normalize-space()) = $key]
-                for $distinct_successor in distinct-values($words/lower-case(normalize-space(following-sibling::w[1])))
-                let $count_words := $words/lower-case(normalize-space(following-sibling::w[1]))[. = $distinct_successor]
-                order by count($count_words) descending
+                let $doc := collection("./?select=*xml")
+                let $result := $doc//w[matches(.,'^has')]
+                for $succ in ($result/lower-case(normalize-space(following-sibling::w[1])))
                 return
                     <tr>
                         <td>
-                            {$key}
+                            {"has"}
                         </td>
                         <td>
-                            {$distinct_successor}
-                        </td>
-                        <td>
-                            {count($count_words)}
+                            {$succ}
                         </td>
                     </tr>
             }
